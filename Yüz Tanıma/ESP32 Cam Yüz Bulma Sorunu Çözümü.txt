@@ -1,0 +1,24 @@
+Locate these sections from the app_httpd.cpp:
+
+if (net_boxes){
+    detected = true;
+    if(recognition_enabled){
+        face_id = run_face_recognition(image_matrix, net_boxes);
+    }
+    draw_face_boxes(image_matrix, net_boxes, face_id);
+    free(net_boxes->score);
+    free(net_boxes->box);
+    free(net_boxes->landmark);
+    free(net_boxes);
+and
+
+fr_recognize = esp_timer_get_time();
+draw_face_boxes(image_matrix, net_boxes, face_id);
+free(net_boxes->score);
+free(net_boxes->box);
+free(net_boxes->landmark);
+free(net_boxes);
+
+
+replace the 4 free's in each block with dl_lib_free.
+"free" yerine "dl_lib_free" yazılacak.
